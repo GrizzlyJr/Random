@@ -1,5 +1,5 @@
+#!/bin/sh
 domain=MAIL.DOMAIN.LTD;
-#/etc/letsencrypt/certbot-auto renew;
 /etc/letsencrypt/certbot-auto renew | grep 'No renewals were attempted.' &> /dev/null
 if [ $? == 0 ]; then
         echo 'No Renewals were attempted. No need to stop Zimbra.'
