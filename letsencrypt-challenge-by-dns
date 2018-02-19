@@ -1,0 +1,1 @@
+certbot certonly --preferred-challenges=dns --manual -d $domain --manual-public-ip-logging-ok
