@@ -6,6 +6,7 @@ if [ $? == 0 ]; then
 else
         echo 'Cert is due to Renewal, Renewing certificates';
         su zimbra -c '/opt/zimbra/bin/zmcontrol stop';
+        /etc/letsencrypt/certbot-auto renew;
         echo '-----BEGIN CERTIFICATE-----
 MIIDSjCCAjKgAwIBAgIQRK+wgNajJ7qJMDmGLvhAazANBgkqhkiG9w0BAQUFADA/
 MSQwIgYDVQQKExtEaWdpdGFsIFNpZ25hdHVyZSBUcnVzdCBDby4xFzAVBgNVBAMT
