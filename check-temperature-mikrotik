@@ -1,0 +1,33 @@
+:global temp [/system health get temperature]
+:local ttoken "TELEGRAM TOKEN BOT";
+:local tchatid "TELEGRAM CHAT ID BOT";
+:local location "YOUR LOCATION";
+:local emessage ("Mikrotik temperature at $location is " . [:pick $temp 0 2] . "." . [:pick $temp 2 3])
+:global turltemp "https://api.telegram.org/bot$ttoken/sendMessage?chat_id=$tchatid&text=$emessage";
+:global TempAboveSent;
+:log info $TempAboveSent;
+
+:if ([:typeof $TempAboveSent] = "nothing") \
+	do={ \
+		if ($temp >= 30)\
+			do={ \
+				:set TempAboveSent 0; \
+				} \
+			else={ \
+				:set TempAboveSent 1; \
+				} \
+		}; \
+
+:if ($temp >= 30 ) \
+	do={ \
+		if ($TempAboveSent = 0) \
+			do={ \
+				/tool fetch url="$turltemp" mode=https keep-result=no; :set TempAboveSent 1; \
+				} \
+		} \
+	else={ \
+		if ($TempAboveSent = 1) \
+			do={ \
+				/tool fetch url="$turltemp" mode=https keep-result=no; :set TempAboveSent 0; \
+				} \
+		};
